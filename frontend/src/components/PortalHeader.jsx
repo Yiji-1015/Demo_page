@@ -14,14 +14,14 @@ export default function PortalHeader() {
           {/* Logo & Title */}
           <div className="flex items-center gap-5 mb-6">
             <img 
-              src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69425d25058a80a1c4b3e584/ba2042d8b_favicon.png"
-              alt="LLOYDK Logo"
+              // src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69425d25058a80a1c4b3e584/ba2042d8b_favicon.png"
+              alt=""
               className="w-14 h-14 object-contain"
             />
-            <div>
+            {/* <div>
               <h1 className="text-[28px] font-semibold text-gray-900 tracking-tight mb-0.5">LLOYDK</h1>
               <p className="text-[14px] font-medium text-gray-500 tracking-wide">DEMO PORTAL</p>
-            </div>
+            </div> */}
           </div>
 
           {/* Subtitle */}

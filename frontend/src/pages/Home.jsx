@@ -183,7 +183,7 @@ export default function Home() {
         {/* Footer */}
         <div className="mt-20 pt-8 border-t border-gray-200/50">
           <div className="flex flex-col lg:flex-row items-center justify-between gap-4 text-[13px] text-gray-400">
-            <p>© 2025 LLOYDK. All rights reserved.</p>
+            <p>© . All rights reserved.</p>
             <div className="flex items-center gap-6">
               <span className="flex items-center gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />

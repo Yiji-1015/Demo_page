@@ -65,12 +65,12 @@ export default function Layout({ children, currentPageName }) {
           <div className="px-6 py-8">
             <Link to={createPageUrl('Home')} className="flex items-center gap-3">
               <img 
-                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69425d25058a80a1c4b3e584/ba2042d8b_favicon.png"
-                alt="LLOYDK"
+                // src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69425d25058a80a1c4b3e584/ba2042d8b_favicon.png"
+                alt=""
                 className="w-9 h-9 object-contain"
               />
               <div>
-                <h1 className="text-[17px] font-semibold text-gray-900 tracking-tight">LLOYDK</h1>
+                {/* <h1 className="text-[17px] font-semibold text-gray-900 tracking-tight">LLOYDK</h1> */}
                 <p className="text-[11px] text-gray-500 font-medium tracking-wide">DEMO PORTAL</p>
               </div>
             </Link>
@@ -267,11 +267,11 @@ export default function Layout({ children, currentPageName }) {
           </Button>
           <div className="flex items-center gap-2">
             <img 
-              src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69425d25058a80a1c4b3e584/ba2042d8b_favicon.png"
+              // src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69425d25058a80a1c4b3e584/ba2042d8b_favicon.png"
               alt="LLOYDK"
               className="w-7 h-7 object-contain"
             />
-            <span className="font-semibold text-gray-900 text-[15px]">LLOYDK</span>
+            <span className="font-semibold text-gray-900 text-[15px]">Demo Portal</span>
           </div>
           <div className="w-10" />
         </div>

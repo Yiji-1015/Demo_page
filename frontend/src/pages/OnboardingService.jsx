@@ -132,7 +132,7 @@ export default function OnboardingService() {
               </Button>
               <div className="p-3 rounded-xl bg-gray-100">
                 <img 
-                  src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69425d25058a80a1c4b3e584/ba2042d8b_favicon.png"
+                  // src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/69425d25058a80a1c4b3e584/ba2042d8b_favicon.png"
                   alt="Confluence"
                   className="w-7 h-7 object-contain"
                 />

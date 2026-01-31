@@ -31,7 +31,7 @@ class ConfluenceClient:
         Space의 모든 페이지를 카테고리(경로) 정보와 함께 가져옵니다.
 
         Args:
-            space_key: Confluence Space 키 (예: "LLOYDK")
+            space_key: Confluence Space 키 
 
         Returns:
             페이지 정보 리스트 [{"id": "...", "title": "...", "path": "..."}, ...]
