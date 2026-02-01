@@ -69,6 +69,25 @@ class EmbeddingManager:
         )
         return response.data[0].embedding
 
+    def embedding_batch(self, texts: List[str]) -> List[List[float]]:
+        """
+        여러 텍스트를 한 번에 임베딩 벡터로 변환합니다. (배치 처리)
+
+        Args:
+            texts: 임베딩할 텍스트 리스트
+
+        Returns:
+            임베딩 벡터 리스트
+        """
+        if not texts:
+            return []
+
+        response = self.client_upstage.embeddings.create(
+            input=texts,
+            model="embedding-query"
+        )
+        return [data.embedding for data in response.data]
+
     def ensure_collection_exists(self):
         """Qdrant 컬렉션이 없으면 생성합니다."""
         if not self.client_qdrant.collection_exists(collection_name=self.collection_name):
@@ -99,9 +118,9 @@ class EmbeddingManager:
         try:
             collection_info = self.client_qdrant.get_collection(self.collection_name)
             return {
+                "collection_name": self.collection_name,
                 "points_count": collection_info.points_count,
                 "status": collection_info.status,
-                "vectors_count": collection_info.vectors_count
             }
         except Exception as e:
             return {"error": str(e)}
@@ -209,8 +228,12 @@ class EmbeddingManager:
             batch_docs = documents[i : i + batch_size]
             batch_texts = [doc.page_content for doc in batch_docs]
 
-            # 각 텍스트를 개별적으로 임베딩
-            batch_vectors = [self.embedding(text) for text in batch_texts]
+            # 진행 상황 표시
+            progress = min(i + batch_size, total_docs)
+            print(f"   ⏳ 진행 중: {progress}/{total_docs} ({int(progress/total_docs*100)}%)")
+
+            # ✅ 배치 임베딩으로 한 번에 처리 (속도 향상!)
+            batch_vectors = self.embedding_batch(batch_texts)
 
             # PointStruct 생성
             points = []

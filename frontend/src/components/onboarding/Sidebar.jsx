@@ -87,7 +87,15 @@ export default function Sidebar({
 
       setCategoriesData(data);
       setCategoriesLoaded(true);
-      toast.success(`${data.total_pages}개 페이지 로드 완료!`);
+
+      // ✅ 추가: 전체 페이지 ID를 자동으로 선택
+      if (data.pages && data.pages.length > 0) {
+        const allPageIds = data.pages.map(page => page.id);
+        setFilteredPageIds(allPageIds);
+        toast.success(`${data.total_pages}개 페이지 로드 및 선택 완료!`);
+      } else {
+        toast.success(`${data.total_pages}개 페이지 로드 완료!`);
+      }
     } catch (error) {
       console.error("카테고리 로드 실패:", error);
       const errorMessage = error.response?.data?.detail || '카테고리를 불러올 수 없습니다';

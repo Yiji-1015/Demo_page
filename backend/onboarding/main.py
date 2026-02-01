@@ -4,7 +4,7 @@ Confluence 챗봇 FastAPI 백엔드 서버
 
 import os
 from typing import List, Dict, Any, Optional
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
@@ -60,6 +60,16 @@ class ConfluenceConfig(BaseModel):
 
 class EmbeddingRequest(BaseModel):
     """임베딩 요청"""
+    page_ids: List[str]
+    collection_name: Optional[str] = "confluence_docs"
+
+
+class EmbedPagesRequest(BaseModel):
+    """페이지 임베딩 통합 요청"""
+    base_url: str
+    email: str
+    api_token: str
+    space_key: str
     page_ids: List[str]
     collection_name: Optional[str] = "confluence_docs"
 
@@ -154,7 +164,13 @@ async def get_categories(config: ConfluenceConfig):
 
 
 @app.post("/api/confluence/filter-pages")
-async def filter_pages(config: ConfluenceConfig, filters: Dict[str, str]):
+async def filter_pages(
+    config: ConfluenceConfig,
+    level_1: Optional[str] = Query(None),
+    level_2: Optional[str] = Query(None),
+    level_3: Optional[str] = Query(None),
+    level_4: Optional[str] = Query(None)
+):
     """페이지 필터링"""
     try:
         client = ConfluenceClient(
@@ -162,6 +178,17 @@ async def filter_pages(config: ConfluenceConfig, filters: Dict[str, str]):
             email=config.email,
             api_token=config.api_token
         )
+
+        # 쿼리 파라미터를 dict로 변환
+        filters = {}
+        if level_1:
+            filters['level_1'] = level_1
+        if level_2:
+            filters['level_2'] = level_2
+        if level_3:
+            filters['level_3'] = level_3
+        if level_4:
+            filters['level_4'] = level_4
 
         page_ids = client.filter_pages_by_category(config.space_key, filters)
 
@@ -213,7 +240,7 @@ async def initialize_embedding():
 
 
 @app.post("/api/embedding/embed-pages")
-async def embed_pages(config: ConfluenceConfig, request: EmbeddingRequest):
+async def embed_pages(request: EmbedPagesRequest):
     """페이지 임베딩"""
     global embedding_manager
 
@@ -222,16 +249,20 @@ async def embed_pages(config: ConfluenceConfig, request: EmbeddingRequest):
 
     try:
         client = ConfluenceClient(
-            base_url=config.base_url,
-            email=config.email,
-            api_token=config.api_token
+            base_url=request.base_url,
+            email=request.email,
+            api_token=request.api_token
         )
 
         titles = []
         contents = []
         valid_page_ids = []
 
-        for page_id in request.page_ids:
+        total_pages = len(request.page_ids)
+        print(f"📄 총 {total_pages}개 페이지 처리 시작...")
+
+        for idx, page_id in enumerate(request.page_ids, 1):
+            print(f"   📄 [{idx}/{total_pages}] 페이지 {page_id} 처리 중...")
             page_data = client.get_page_content(page_id)
             if page_data:
                 # ✅ 수정: 이제 parse_storage_html이 임포트 되어서 에러 안 납니다!
@@ -245,6 +276,11 @@ async def embed_pages(config: ConfluenceConfig, request: EmbeddingRequest):
                     titles.append(page_data['title'])
                     contents.append(parsed['combined_text'])
                     valid_page_ids.append(page_id)
+                    print(f"   ✅ [{idx}/{total_pages}] '{page_data['title']}' 처리 완료")
+                else:
+                    print(f"   ⚠️ [{idx}/{total_pages}] 빈 페이지 스킵")
+            else:
+                print(f"   ❌ [{idx}/{total_pages}] 페이지 조회 실패")
 
         if not valid_page_ids:
             return {
@@ -256,7 +292,7 @@ async def embed_pages(config: ConfluenceConfig, request: EmbeddingRequest):
             page_ids=valid_page_ids,
             titles=titles,
             contents=contents,
-            base_url=config.base_url
+            base_url=request.base_url
         )
 
         return {

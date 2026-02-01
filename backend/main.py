@@ -1,10 +1,11 @@
 # backend/main.py
 
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware 
+from fastapi.middleware.cors import CORSMiddleware
 from onboarding.main import app as onboarding_app
 
-root_app = FastAPI()
+# ✅ 수정: onboarding 앱을 루트 앱으로 직접 사용
+root_app = onboarding_app
 
 # 🔒 CORS 설정 추가 (현관문 보안 해제)
 origins = [
@@ -20,9 +21,6 @@ root_app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-# 기존 마운트 코드
-root_app.mount("/onboarding", onboarding_app)
 
 @root_app.get("/")
 def read_root():

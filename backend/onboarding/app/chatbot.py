@@ -125,12 +125,14 @@ class ConfluenceChatbot:
             score = hit.score
             payload = hit.payload
 
+            source_url = payload.get('source', '')
             results.append({
                 "score": score,
                 "title": payload.get('title', '제목 없음'),
                 "content": payload.get('page_content', ''),
                 "page_id": payload.get('page_id', 'Unknown'),
-                "source": payload.get('source', '')
+                "source": source_url,
+                "url": source_url  # ✅ 프론트엔드에서 사용하는 필드 추가
             })
 
         return results
