@@ -1,0 +1,32 @@
+# FastAPI 및 서버
+fastapi
+uvicorn[standard]
+python-multipart
+
+# HTTP 요청
+requests
+
+# HTML 파싱
+beautifulsoup4
+lxml
+
+# 데이터 처리
+pandas
+openpyxl
+pypdf
+
+# 임베딩 및 벡터 DB
+openai
+qdrant-client
+
+# LangChain
+langchain
+langchain-core
+langchain-text-splitters
+langchain-upstage
+
+# Streamlit UI
+streamlit
+
+# 환경 변수
+python-dotenv
