@@ -1,52 +1,89 @@
-# === Python 기본 ===
+# Python
 __pycache__/
 *.py[cod]
-*.pyo
-*.pyd
+*$py.class
 *.so
-*.egg
-*.egg-info/
+.Python
 build/
+develop-eggs/
 dist/
+downloads/
+eggs/
+.eggs/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
 
-# === Virtual environments ===
-.venv_docker/
-.venv*/
+# Virtual Environment
 .venv/
 venv/
-env/
 ENV/
-env*/          
-*.env          
+env/
 
-# === Jupyter ===
-.ipynb_checkpoints/
+# Environment Variables
+.env
+.env.local
+.env.*.local
 
-# === VS Code ===
+# IDE
 .vscode/
-.history/
+.idea/
+*.swp
+*.swo
+*~
 
-# === System ===
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+
+# Excel
+*.xlsx
+*.xls
+!Confluence_Data_Definition.xlsx
+
+# Logs
+*.log
+
+# OS
 .DS_Store
 Thumbs.db
 
-# === Bash / Shell personal configs ===
-.profile
-.bashrc
-.bash_history
-.bash_logout
+# Streamlit
+.streamlit/
 
-# === Logs & temp ===
+# Temporary
+tmp*
+temp*
+
+#env
+.env
+.env.*
+
+# Logs
+logs
 *.log
-*.tmp
-*.bak
-*.swp
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# === Docker ===
-**/__pycache__/
-.envrc
-docker-compose.override.yml
+node_modules
+dist
+dist-ssr
+*.local
 
-# === Files ===
-company_chatbot/files/
-*.pdfbus_bts.csv
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
